@@ -7,11 +7,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
-  /** Creates a new LedSubsystem. */
-  public LEDSubsystem() {}
+    /** Creates a new LedSubsystem. */
+    public LEDSubsystem() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }

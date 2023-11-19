@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 /**
 * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
 * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,15 +15,26 @@ package frc.robot;
 * constants are needed, to reduce verbosity.
 */
 public final class Constants {
-<<<<<<< Updated upstream
-    public static class OperatorConstants {
-        public static final int kDriverControllerPort = 0;
+    public static class ArmConstants {
+        public static final int kMotorID = 30;
+        public static final boolean kMotorInverted = false;
+        public static final NeutralMode kMotorNeutralMode = NeutralMode.Brake;
+        public static final double kArmClosedLoopRamp = 1;
+
+        public static final double kArmConversionFactor = ((48.0 * 2.8) / 2048.0) * 360.0;
+
+        public static final double kArmTopLimit = 0.0;
+        public static final double kArmBottomLimit = 0.0;
+        public static final double kArmVoltageCompansationValue = 12.0;
+
+        public static final double kArmCruiseVelocity = 0.0;
+        public static final double kArmAcceleration = 0.0;
+
+        public static final double kArmP = 0.0;
+        public static final double kArmI = 0.0;
+        public static final double kArmD = 0.0;
+        public static final double kArmFeedForwardValue = 0.0;
+
+        public static final double kArmTolerance = 1;
     }
-=======
-  public static class ArmConstants{
-    public static final int kMotorID = 30;
-    public static final boolean kMotorInverted = false;
-    public static final NeutralMode
-  }
->>>>>>> Stashed changes
 }

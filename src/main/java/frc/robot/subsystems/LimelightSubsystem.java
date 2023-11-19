@@ -7,11 +7,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
-  /** Creates a new Limelight. */
-  public LimelightSubsystem() {}
+    /** Creates a new Limelight. */
+    public LimelightSubsystem() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }
