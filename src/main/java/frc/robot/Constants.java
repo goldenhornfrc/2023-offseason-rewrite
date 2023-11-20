@@ -37,4 +37,9 @@ public final class Constants {
 
         public static final double kArmTolerance = 1;
     }
+
+    public static class LimelightConstants {
+        public static final double kLimeLightHeight = 60.0;
+        public static final double kTargetHeight = 43.0;
+    }
 }
