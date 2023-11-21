@@ -74,7 +74,7 @@ public class ArmSubsystem extends SubsystemBase {
         return armMotor.getSelectedSensorPosition() * ArmConstants.kArmConversionFactor;
     }
     public void resetArm(double value) {
-        armMotor.setSelectedSensorPosition(value);
+        armMotor.setSelectedSensorPosition(value / ArmConstants.kArmConversionFactor);
     }
     public double getCurrentSensorPosition() {
         return armMotor.getSelectedSensorPosition();
