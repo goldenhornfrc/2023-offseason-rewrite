@@ -10,6 +10,7 @@ import frc.robot.subsystems.ArmSubsystem;
 public class SetArmOpenLoop extends CommandBase {
     private static ArmSubsystem m_arm;
     private double m_speed;
+
     /** Creates a new SetArmVoltage. */
     public SetArmOpenLoop(ArmSubsystem arm, double speed) {
         m_arm = arm;

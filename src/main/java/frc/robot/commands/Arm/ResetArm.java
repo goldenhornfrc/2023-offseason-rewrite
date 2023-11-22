@@ -4,28 +4,27 @@
 
 package frc.robot.commands.Arm;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ResetArm extends InstantCommand {
-  private static ArmSubsystem m_arm;
-  private static double m_AngleTarget;
+    private static ArmSubsystem m_arm;
+    private static double m_AngleTarget;
 
-  public ResetArm(ArmSubsystem arm) {
-    m_arm = arm;
-    m_AngleTarget = ArmConstants.kArmResetSensorAngle;
-  }
+    public ResetArm(ArmSubsystem arm) {
+        m_arm = arm;
+        m_AngleTarget = ArmConstants.kArmResetSensorAngle;
+    }
 
-  public ResetArm(ArmSubsystem arm, double specificAngle){
-    m_arm = arm;
-    m_AngleTarget = specificAngle;
-  }
+    public ResetArm(ArmSubsystem arm, double specificAngle) {
+        m_arm = arm;
+        m_AngleTarget = specificAngle;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_arm.resetArm(m_AngleTarget);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        m_arm.resetArm(m_AngleTarget);
+    }
 }
