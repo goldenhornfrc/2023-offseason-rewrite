@@ -1,5 +1,6 @@
 package frc.lib.vision;
 
+// spotless:off
 // LimelightHelpers v1.2.1 (March 1, 2023)
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
