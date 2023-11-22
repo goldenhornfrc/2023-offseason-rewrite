@@ -12,6 +12,7 @@ public class SetArmClosedLoop extends CommandBase {
     private static ArmSubsystem m_arm;
     private static double m_targetAngle;
     private static boolean m_isContinous;
+
     /** Creates a new SetArmClosedLoop. */
     public SetArmClosedLoop(ArmSubsystem arm, double target, boolean iscontinious) {
         m_arm = arm;
