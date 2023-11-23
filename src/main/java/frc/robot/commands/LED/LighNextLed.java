@@ -11,21 +11,21 @@ import frc.robot.subsystems.LEDSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LighNextLed extends InstantCommand {
-  private LEDSubsystem m_led;
-  private int R,G,B;
-  public int currentIndex = 0;
+    private LEDSubsystem m_led;
+    private int R, G, B;
+    public int currentIndex = 0;
 
-  public LighNextLed(LEDSubsystem ledSubsystem, int r, int g, int b) {
-    m_led = ledSubsystem;
-    R = r;
-    G = g;
-    B = b;
- }
+    public LighNextLed(LEDSubsystem ledSubsystem, int r, int g, int b) {
+        m_led = ledSubsystem;
+        R = r;
+        G = g;
+        B = b;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_led.setSpecificLedStaticColorMode(m_led, R, G, B, currentIndex);
-    currentIndex += 1;
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        m_led.setSpecificLedStaticColorMode(m_led, R, G, B, currentIndex);
+        currentIndex += 1;
+    }
 }
