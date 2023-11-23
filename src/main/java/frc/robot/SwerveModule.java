@@ -44,7 +44,7 @@ public class SwerveModule {
 
 
         //config
-        angleEncoder = new CANCoder(moduleconstans.cancoderID);
+        angleEncoder = new CANCoder(moduleconstans.CANCoderID);
         configAngleEncoder();
         //config
         driveMotor = new CANSparkMax(moduleconstans.driveMotorID,MotorType.kBrushless);
@@ -61,7 +61,7 @@ public class SwerveModule {
     private void configAngleEncoder() {
         angleEncoder.configFactoryDefault();
         CANCoderUtil.setCANCoderBusUsage(angleEncoder,CCUsage.kMinimal);
-        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCANCoderConfig);
     }
 
     public void setDesiredState(SwerveModuleState desiredState,boolean isOpenLoop){
@@ -82,16 +82,15 @@ public class SwerveModule {
         driveMotor.setInverted(false);
         driveMotor.setIdleMode(null);
         driveMotor.setSmartCurrentLimit(60);
-        driveEncoder.getVelocityConversionFactor();
-        driveEncoder.getPositionConversionFactor();
-        driveController.getP();
-        driveController.getI();
-        driveController.getD();
-        driveController.getFF();
+        driveEncoder.setVelocityConversionFactor(0.0);
+        driveEncoder.setPositionConversionFactor(0.0);
+        driveController.setP(0.0);
+        driveController.setI(0.0);
+        driveController.setD(0.0);
+        driveController.setFF(0.0);
         driveMotor.enableVoltageCompensation(12);
-        driveEncoder.setPosition(0.0);
         driveMotor.burnFlash();
-
+        driveEncoder.setPosition(0.0);
     }
     public void configAngleMotor(){
         angleMotor.restoreFactoryDefaults();
@@ -100,10 +99,10 @@ public class SwerveModule {
         angleMotor.setIdleMode(null);
         angleMotor.setSmartCurrentLimit(20);
         integradetAngleEncoder.setPositionConversionFactor(28);
-        angleController.getP();
-        angleController.getI();
-        angleController.getD();
-        angleController.getFF();
+        angleController.setP(0.0);
+        angleController.setI(0.0);
+        angleController.setD(0.0);
+        angleController.setFF(0.0);
         angleMotor.enableVoltageCompensation(12);
         angleMotor.burnFlash();
         resetToAbsolute();

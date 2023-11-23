@@ -97,7 +97,7 @@ public class Swerve extends SubsystemBase {
 
         estimator =
             new SwerveDrivePoseEstimator(
-                null,
+              Constants.Swerve.swerveKinematics,
                 getHeadingRotation(),
                 getModulePositions(),
                 new Pose2d(),
@@ -136,7 +136,7 @@ public class Swerve extends SubsystemBase {
   public void resetOdometry(Pose2d pose){
     estimator.resetPosition(getHeadingRotation(), getModulePositions(), pose);
   }
-  public void EstimatorWithVision(Pose2d measurement,double latency){
+  public void updateEstimatorWithVision(Pose2d measurement,double latency){
     estimator.addVisionMeasurement(measurement,Timer.getFPGATimestamp() - latency);
   }
   public Rotation2d getHeadingRotation() {
@@ -180,10 +180,10 @@ public class Swerve extends SubsystemBase {
   public boolean getIsFieldOriented(){
     return isFieldOriented;
   }
-  public void setisFieldOrieted(){
+  public void setFieldOrieted(){
     isFieldOriented = true;
   }
-  public void isRobotOriented(){
+  public void setRobotOriented(){
     isFieldOriented = false;
   }
 }
