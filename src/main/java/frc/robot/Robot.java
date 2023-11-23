@@ -27,10 +27,10 @@ public class Robot extends TimedRobot {
     */
   private static Alliance currentAlliance = Alliance.Invalid;
   private final SendableChooser <Alliance> m_allianceChooser = new SendableChooser<>();
-  
+
   public void setAlliance( Alliance allianceSet ) {currentAlliance = allianceSet;}
   public static Alliance getAlliance() {return currentAlliance;}
-  
+
     @Override
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
