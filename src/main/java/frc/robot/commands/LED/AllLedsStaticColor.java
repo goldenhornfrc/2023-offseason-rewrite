@@ -9,13 +9,9 @@ import frc.robot.subsystems.LEDSubsystem;
 
 public class AllLedsStaticColor extends CommandBase {
     private LEDSubsystem m_led;
-    private int R, G, B;
     /** Creates a new AllLedsStaticColor. */
-    public AllLedsStaticColor(LEDSubsystem ledSubsystem, int r, int g, int b) {
+    public AllLedsStaticColor(LEDSubsystem ledSubsystem) {
         m_led = ledSubsystem;
-        R = r;
-        G = g;
-        B = b;
     }
 
     // Called when the command is initially scheduled.
@@ -24,7 +20,7 @@ public class AllLedsStaticColor extends CommandBase {
 
     @Override
     public void execute() {
-        m_led.setAllLedsStaticColorMode(m_led, R, G, B);
+        m_led.setAllLedsStaticColorMode();
     }
 
     // Called once the command ends or is interrupted.

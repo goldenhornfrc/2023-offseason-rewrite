@@ -12,10 +12,11 @@ import frc.robot.Constants.LEDConstants;
 public class LEDSubsystem extends SubsystemBase {
     AddressableLED m_led = new AddressableLED(LEDConstants.kLEDHeader);
     AddressableLEDBuffer m_LedBuffer = new AddressableLEDBuffer(LEDConstants.kLEDBuffer);
+    private int currentR, currentG, currentB;
+    public int currentIndex = 0;
 
     public LEDSubsystem() {
         m_led.setLength(m_LedBuffer.getLength());
-
         m_led.setData(m_LedBuffer);
         m_led.start();
     }
@@ -36,21 +37,27 @@ public class LEDSubsystem extends SubsystemBase {
         return m_LedBuffer;
     }
 
-    public void setAllLedsStaticColorMode(LEDSubsystem led, int r, int g, int b) {
-        for (var i = 0; i < led.m_LedBuffer.getLength(); i++) {
-            m_LedBuffer.setRGB(i, r, g, b);
+    public void setAllLedsStaticColorMode() {
+        for (var i = 0; i < m_LedBuffer.getLength(); i++) {
+            m_LedBuffer.setRGB(i, currentR, currentG, currentB);
         }
 
         m_led.setData(m_LedBuffer);
     }
 
-    public void setSpecificLedStaticColorMode(
-            LEDSubsystem led, int r, int g, int b, int specifiedLed) {
-        m_LedBuffer.setRGB(specifiedLed, r, g, b);
+    public void setSpecificLedStaticColorMode(int specifiedLed) {
+        m_LedBuffer.setRGB(specifiedLed, currentR, currentG, currentB);
         m_led.setData(m_LedBuffer);
     }
 
-    public void setAllLedsRainbowMode(LEDSubsystem led, int r, int g, int b) {
+    public void setRGB(int r, int g, int b) {
+        currentR = r;
+        currentG = g;
+        currentB = b;
+    }
+
+    //TODO: FIX THIS
+    /*public void setAllLedsRainbowMode(LEDSubsystem led, int r, int g, int b) {
         int m_rainbowFirstPixelHue = 0;
         for (var i = 0; i < led.m_LedBuffer.getLength(); i++) {
             final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_LedBuffer.getLength()));
@@ -58,13 +65,9 @@ public class LEDSubsystem extends SubsystemBase {
         }
         m_rainbowFirstPixelHue += 3;
         m_rainbowFirstPixelHue %= 180;
-    }
+    }*/
 
-    public void IncreaseAllLedsBrightness(LEDSubsystem led, int r, int g, int b) {
-        int currentR, currentG, currentB;
-        currentR = r;
-        currentG = g;
-        currentB = b;
+    public void IncreaseAllLedsBrightness() {
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for blue
             m_LedBuffer.setRGB(i, currentR, currentG, currentB);
@@ -82,24 +85,22 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData(m_LedBuffer);
     }
 
-    public void DecreaseAllLedsBrightness(LEDSubsystem led, int r, int g, int b) {
-        int currentR, currentG, currentB;
-        currentR = r;
-        currentG = g;
-        currentB = b;
+    public void DecreaseAllLedsBrightness() {
+
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for blue
-            m_LedBuffer.setRGB(i, currentR, currentG, currentB);
+            m_LedBuffer.setRGB(i, currentR, currentG, currentB - ((Math.abs(currentIndex - i)) * 50));
         }
 
         // increase brightness
-        currentR -= 20;
-        currentG -= 20;
-        currentB -= 20;
         // Check bounds
         currentR %= 255;
         currentG %= 255;
         currentB %= 255;
+
+        currentR = currentR < 0 ? 0 : currentR;
+        currentG = currentG < 0 ? 0 : currentG;
+        currentB = currentB < 0 ? 0 : currentB;
 
         m_led.setData(m_LedBuffer);
     }

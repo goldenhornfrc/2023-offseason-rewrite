@@ -35,8 +35,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     public enum armState{
         RESETTING,
-        SETTINGCLOSEDLOOP,
-        SETTINGOPENLOOP
+        CLOSED_LOOP,
+        OPEN_LOOP,
+        AT_SETPOINT
     }
 
     @Override

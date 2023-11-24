@@ -12,15 +12,10 @@ import frc.robot.subsystems.LEDSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LighNextLed extends InstantCommand {
     private LEDSubsystem m_led;
-    private int R, G, B;
-    public int currentIndex = 0;
     public boolean isReverse = false;
 
-    public LighNextLed(LEDSubsystem ledSubsystem, int r, int g, int b) {
-        m_led = ledSubsystem;
-        R = r;
-        G = g;
-        B = b;
+    public LighNextLed(LEDSubsystem led) {
+        m_led = led;
     }
 
     // Called when the command is initially scheduled.
@@ -29,19 +24,19 @@ public class LighNextLed extends InstantCommand {
 
         //? increases or decreases the index of the current index based on the direction
         if (isReverse == false) {
-            currentIndex += 1;
+            m_led.currentIndex += 1;
         } else if (isReverse == true) {
-            currentIndex -= 1;
+            m_led.currentIndex -= 1;
         }
 
         //? changes the direction of animation if reaches the end of the buffer
-        if (currentIndex == m_led.getLedBuffer().getLength()) {
-            isReverse = true;
-        }else if (currentIndex == 0) {
+        if (m_led.currentIndex == m_led.getLedBuffer().getLength() - 1) {
+            m_led.currentIndex = 0;
+        }else if (m_led.currentIndex == 0) {
             isReverse = false;
         }
 
         //? sets the led int the current index to the desired color output
-        m_led.setSpecificLedStaticColorMode(m_led, R, G, B, currentIndex);
+        m_led.setSpecificLedStaticColorMode(m_led.currentIndex);
     }
 }
