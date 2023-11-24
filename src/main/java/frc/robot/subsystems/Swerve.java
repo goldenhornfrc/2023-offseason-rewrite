@@ -28,7 +28,7 @@ public class Swerve extends SubsystemBase {
   private final SwerveDrivePoseEstimator estimator;
   private static boolean isFieldOriented = true;
   private static boolean WantsHeadingLock = false;
-  private static boolean WantsVisionAllign = false;
+  private static boolean WantsVisionAlign = false;
   private final SwerveModule[] mSwerveMods;
   public double HeadingLockTargetAngle;
   
@@ -45,10 +45,10 @@ public class Swerve extends SubsystemBase {
   , 0);
 
   
-  public PIDController getrotController(){
+  public PIDController getRotController(){
     return rotController;
   }
-  public PIDController getxyController(){
+  public PIDController getXYController(){
     return xyController;
   }
 
@@ -71,11 +71,11 @@ public class Swerve extends SubsystemBase {
     
   }
 
-  public boolean getWantsVisionAllign(){
-    return WantsVisionAllign;
+  public boolean getWantsVisionAlign(){
+    return WantsVisionAlign;
   }
-  public void setWantsVisionAllign(boolean newVisionAllign){
-      WantsHeadingLock = newVisionAllign;
+  public void setWantsVisionAlign(boolean newVisionAlign){
+      WantsHeadingLock = newVisionAlign;
   }
 
 
@@ -87,17 +87,17 @@ public class Swerve extends SubsystemBase {
 
         mSwerveMods =
         new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-                    new SwerveModule(1, Constants.Swerve.Mod1.constants),
-                    new SwerveModule(2, Constants.Swerve.Mod2.constants),
-                new SwerveModule(3, Constants.Swerve.Mod3.constants)
+            new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
+                    new SwerveModule(1, Constants.SwerveConstants.Mod1.constants),
+                    new SwerveModule(2, Constants.SwerveConstants.Mod2.constants),
+                new SwerveModule(3, Constants.SwerveConstants.Mod3.constants)
         };
        
        // desired State ,angular velocity,openloop,vecbuilder,IEEEremainder
 
         estimator =
             new SwerveDrivePoseEstimator(
-              Constants.Swerve.swerveKinematics,
+              Constants.SwerveConstants.swerveKinematics,
                 getHeadingRotation(),
                 getModulePositions(),
                 new Pose2d(),
@@ -110,7 +110,7 @@ public class Swerve extends SubsystemBase {
 
 
   public void drive(Translation2d translation,double rotation,boolean fieldRelative,boolean isOpenLoop){
-    SwerveModuleState[] swerveModuleState = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+    SwerveModuleState[] swerveModuleState = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(
        fieldRelative ? 
        ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(),translation.getY(), rotation ,  getPose().getRotation()) 
        :new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
@@ -180,7 +180,7 @@ public class Swerve extends SubsystemBase {
   public boolean getIsFieldOriented(){
     return isFieldOriented;
   }
-  public void setFieldOrieted(){
+  public void setFieldOriented(){
     isFieldOriented = true;
   }
   public void setRobotOriented(){
