@@ -20,6 +20,13 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.start();
     }
 
+    public enum LEDState {
+        STATIC_ON,
+        BLINKING,
+        ANIMATING,
+        STATIC_OFF
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
