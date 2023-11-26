@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,14 +23,20 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
 
     /**
-    * This function is run when the robot is first started up and should be used for any
-    * initialization code.
-    */
-  private static Alliance currentAlliance = Alliance.Invalid;
-  private final SendableChooser <Alliance> m_allianceChooser = new SendableChooser<>();
+     * This function is run when the robot is first started up and should be used for any
+     * initialization code.
+     */
+    private static Alliance currentAlliance = Alliance.Invalid;
 
-  public void setAlliance( Alliance allianceSet ) {currentAlliance = allianceSet;}
-  public static Alliance getAlliance() {return currentAlliance;}
+    private final SendableChooser<Alliance> m_allianceChooser = new SendableChooser<>();
+
+    public void setAlliance(Alliance allianceSet) {
+        currentAlliance = allianceSet;
+    }
+
+    public static Alliance getAlliance() {
+        return currentAlliance;
+    }
 
     @Override
     public void robotInit() {

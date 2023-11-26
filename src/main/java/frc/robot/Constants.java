@@ -72,15 +72,31 @@ public final class Constants {
         public static final double openLoopRamp = 0.25;
         public static final double closedLoopRamp = 0.0;
     
-        public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
-        public static final double angleGearRatio = (12.8 / 1.0); // 12.8:1
+        public static final double driveGearRatio = (6.75 / 1.0); 
+        public static final double angleGearRatio = (12.8 / 1.0); 
 
         public static final class  pidConstants{
           public static final double rotControllerTolerance = 0;
           public static final double xyControllerTolerance = 0;
+        
           
 
         }
+
+        public static final double xLimiter = 0;
+        public static final double yLimiter = 0;
+        public static final double rotLimiter = 0;
+
+        public static final double voltageCompansation = 12;
+
+
+
+
+        public static final int angleContinuousCurrentLimit = 20;
+        public static final int driveContinuousCurrentLimit = 60;
+
+
+        public static final boolean invertGyro = true;
         public static final double maxSpeed = 4.5;
         public static final double angularMaxVelocity = 11.5;
     
@@ -125,7 +141,8 @@ public final class Constants {
                     public static final SwerveModuleConstants constants =  new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
                   }
 
-       
+                  public static final class DriveConstants {
+                  }
               
           
                 }
