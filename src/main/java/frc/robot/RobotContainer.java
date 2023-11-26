@@ -19,6 +19,7 @@ public class RobotContainer {
     LEDSubsystem m_led = new LEDSubsystem();
     Joystick joystick = new Joystick(0);
 
+
     public RobotContainer() {
         configureBindings(
             
@@ -26,11 +27,18 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+
+        //* */ weirdo ripple effect
         new JoystickButton(joystick, 3)
         .toggleOnTrue(new InstantCommand(() -> m_led.setRGB(0, 0, 255))
         .andThen(new RepeatCommand(Commands.sequence(new InstantCommand(() -> m_led.DecreaseAllLedsBrightness()),
         new WaitCommand(0),
         new LighNextLed(m_led)))));
+
+        new JoystickButton(joystick, 2)
+        .toggleOnTrue(Commands.repeatingSequence(m_led.AllLEDSBlinking(255, 255, 0, 0.3)));
+        //TODO: add command selection for different colors
+
     }
 
     public Command getAutonomousCommand() {

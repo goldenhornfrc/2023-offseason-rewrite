@@ -4,9 +4,14 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.LEDConstants;
 
 public class LEDSubsystem extends SubsystemBase {
@@ -28,6 +33,12 @@ public class LEDSubsystem extends SubsystemBase {
         STATIC_OFF
     }
 
+    public enum LEDColorState {
+        RED,
+        GREEN,
+        BLUE
+    }
+ 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
@@ -56,6 +67,8 @@ public class LEDSubsystem extends SubsystemBase {
         currentB = b;
     }
 
+
+
     //TODO: FIX THIS
     /*public void setAllLedsRainbowMode(LEDSubsystem led, int r, int g, int b) {
         int m_rainbowFirstPixelHue = 0;
@@ -83,6 +96,15 @@ public class LEDSubsystem extends SubsystemBase {
         currentB %= 255;
 
         m_led.setData(m_LedBuffer);
+    }
+    public Command AllLEDSBlinking(int red, int green, int blue, double interval) {
+        return 
+        Commands.runOnce(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();},this)
+        .andThen(Commands.sequence(
+            new InstantCommand(() -> {setRGB(red, green, blue); setAllLedsStaticColorMode();}),
+            new WaitCommand(interval * 2),
+            new InstantCommand(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();}),
+            new WaitCommand(interval)));
     }
 
     public void DecreaseAllLedsBrightness() {
