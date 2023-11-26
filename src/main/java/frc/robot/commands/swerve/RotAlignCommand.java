@@ -26,6 +26,8 @@ public class RotAlignCommand extends CommandBase {
         m_swerve
                 .getRotController()
                 .setTolerance(Constants.SwerveConstants.pidConstants.rotControllerTolerance);
+
+        m_swerve.getRotController().reset();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
