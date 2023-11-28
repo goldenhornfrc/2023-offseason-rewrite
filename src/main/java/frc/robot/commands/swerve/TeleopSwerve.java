@@ -52,9 +52,9 @@ public class TeleopSwerve extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        s_Swerve.getRotController().setTolerance(0);
-        s_Swerve.getRotController().enableContinuousInput(0, 0);
-        s_Swerve.getXYController().setTolerance(0);
+        s_Swerve.getRotController().setTolerance(Constants.SwerveConstants.pidConstants.rotControllerTolerance);
+        s_Swerve.getRotController().enableContinuousInput(-180, 180);
+        s_Swerve.getXYController().setTolerance(Constants.SwerveConstants.pidConstants.xyControllerTolerance);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -58,6 +58,12 @@ public final class Constants {
         public static final int kLEDBuffer = 60;
     }
 
+    public static class IntakeConstants{
+        public static final int intakeMotorID = 0;
+        public static final NeutralMode motorNeutralMode = NeutralMode.Brake;
+        public static final boolean intakeMotorInverted = false;
+    }
+
     // drivetrain
     public static final class SwerveConstants {
         public static final boolean canCoderInvert = false;
@@ -118,6 +124,8 @@ public final class Constants {
         public static final double xyControllerkP = 0;
         public static final double xyControllerkI = 0.0;
         public static final double xyControllerkD = 0;
+
+        public static final double voltageCompansationValue = 12;
 
         public static final SwerveDriveKinematics swerveKinematics =
                 new SwerveDriveKinematics(

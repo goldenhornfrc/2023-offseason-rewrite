@@ -89,7 +89,7 @@ public class SwerveModule {
         driveController.setI(Constants.SwerveConstants.drivekI);
         driveController.setD(Constants.SwerveConstants.drivekD);
         driveController.setFF(Constants.SwerveConstants.drivekFF);
-        driveMotor.enableVoltageCompensation(12);
+        driveMotor.enableVoltageCompensation(Constants.SwerveConstants.voltageCompansationValue);
         driveMotor.burnFlash();
         driveEncoder.setPosition(0.0);
     }
@@ -105,7 +105,7 @@ public class SwerveModule {
         angleController.setP(Constants.SwerveConstants.anglekP);
         angleController.setI(Constants.SwerveConstants.anglekI);
         angleController.setD(Constants.SwerveConstants.anglekD);
-        angleMotor.enableVoltageCompensation(12);
+        angleMotor.enableVoltageCompensation(Constants.SwerveConstants.voltageCompansationValue);
         angleMotor.burnFlash();
         resetToAbsolute();
     }
