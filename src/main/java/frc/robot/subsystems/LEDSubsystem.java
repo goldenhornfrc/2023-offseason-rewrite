@@ -26,7 +26,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.start();
     }
 
-    public enum LEDState {
+    public enum LEDAnimationState {
         STATIC_ON,
         BLINKING,
         ANIMATING,
@@ -34,9 +34,20 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
     public enum LEDColorState {
+        WHITE,
         RED,
         GREEN,
         BLUE
+    }
+
+    private static LEDColorState ledColorState = LEDColorState.WHITE;
+
+    public static void setLEDColorState(LEDColorState state) {
+        ledColorState = state;
+    }
+
+    public LEDColorState getLEDColorState() {
+        return ledColorState;
     }
  
     @Override
@@ -125,5 +136,9 @@ public class LEDSubsystem extends SubsystemBase {
         currentB = currentB < 0 ? 0 : currentB;
 
         m_led.setData(m_LedBuffer);
+    }
+
+    public void SetLEDData(AddressableLED led,AddressableLEDBuffer buffer) {
+        led.setData(buffer);
     }
 }
