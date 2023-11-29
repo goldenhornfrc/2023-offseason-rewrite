@@ -1,6 +1,6 @@
 package frc.lib.vision;
-// LimelightHelpers v1.2.1 (March 1, 2023)
 
+// LimelightHelpers v1.2.1 (March 1, 2023)
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -429,6 +429,7 @@ public class LimelightHelpers {
         }
         return null;
     }
+
     /////
     /////
 
@@ -461,33 +462,33 @@ public class LimelightHelpers {
     }
 
     /**
-    * Switch to getBotPose
-    *
-    * @param limelightName
-    * @return
-    */
+     * Switch to getBotPose
+     *
+     * @param limelightName
+     * @return
+     */
     @Deprecated
     public static double[] getBotpose(String limelightName) {
         return getLimelightNTDoubleArray(limelightName, "botpose");
     }
 
     /**
-    * Switch to getBotPose_wpiRed
-    *
-    * @param limelightName
-    * @return
-    */
+     * Switch to getBotPose_wpiRed
+     *
+     * @param limelightName
+     * @return
+     */
     @Deprecated
     public static double[] getBotpose_wpiRed(String limelightName) {
         return getLimelightNTDoubleArray(limelightName, "botpose_wpired");
     }
 
     /**
-    * Switch to getBotPose_wpiBlue
-    *
-    * @param limelightName
-    * @return
-    */
+     * Switch to getBotPose_wpiBlue
+     *
+     * @param limelightName
+     * @return
+     */
     @Deprecated
     public static double[] getBotpose_wpiBlue(String limelightName) {
         return getLimelightNTDoubleArray(limelightName, "botpose_wpiblue");
@@ -577,11 +578,11 @@ public class LimelightHelpers {
     }
 
     /**
-    * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
-    *
-    * @param limelightName
-    * @return
-    */
+     * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
+     *
+     * @param limelightName
+     * @return
+     */
     public static Pose2d getBotPose2d_wpiBlue(String limelightName) {
 
         double[] result = getBotPose_wpiBlue(limelightName);
@@ -589,11 +590,11 @@ public class LimelightHelpers {
     }
 
     /**
-    * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
-    *
-    * @param limelightName
-    * @return
-    */
+     * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
+     *
+     * @param limelightName
+     * @return
+     */
     public static Pose2d getBotPose2d_wpiRed(String limelightName) {
 
         double[] result = getBotPose_wpiRed(limelightName);
@@ -601,11 +602,11 @@ public class LimelightHelpers {
     }
 
     /**
-    * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
-    *
-    * @param limelightName
-    * @return
-    */
+     * Gets the Pose2d for easy use with Odometry vision pose estimator (addVisionMeasurement)
+     *
+     * @param limelightName
+     * @return
+     */
     public static Pose2d getBotPose2d(String limelightName) {
 
         double[] result = getBotPose(limelightName);
@@ -661,9 +662,9 @@ public class LimelightHelpers {
     }
 
     /**
-    * Sets the crop window. The crop window in the UI must be completely open for dynamic cropping to
-    * work.
-    */
+     * Sets the crop window. The crop window in the UI must be completely open for dynamic cropping to
+     * work.
+     */
     public static void setCropWindow(
             String limelightName, double cropXMin, double cropXMax, double cropYMin, double cropYMax) {
         double[] entries = new double[4];

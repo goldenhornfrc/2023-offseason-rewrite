@@ -1,7 +1,7 @@
 # robot-2023
 
 [![Build](https://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/build.yml/badge.svg)](https://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/build.yml)
-[![Format](hhttps://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/format.yml/badge.svg)](https://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/format.yml)
+[![Format](https://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/format.yml/badge.svg)](https://github.com/goldenhornfrc/2023-offseason-rewrite/actions/workflows/format.yml)
 
 **Formatting with pre-commit**
 If running pre-commit for the first time, run command:
