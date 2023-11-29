@@ -62,6 +62,10 @@ public final class Constants {
         public static final int intakeMotorID = 0;
         public static final NeutralMode motorNeutralMode = NeutralMode.Brake;
         public static final boolean intakeMotorInverted = false;
+        public static final double triggerThresholdCurrent = 0;
+        public static final double triggerThresholdTime = 0;
+        public static final double currentLimit = 0;
+        public static final double configOpenloopRamp = 0;
     }
 
     // drivetrain

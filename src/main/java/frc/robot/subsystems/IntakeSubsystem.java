@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.IntakeConstants.intakeMotorID);
-    private StatorCurrentLimitConfiguration m_limit = new StatorCurrentLimitConfiguration();
+    private SupplyCurrentLimitConfiguration m_limit = new SupplyCurrentLimitConfiguration();
     /** Creates a new IntakeSubsystem. */
     public  enum IntakeState {
       HOLD,
@@ -28,11 +28,11 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.configFactoryDefault();
         intakeMotor.setNeutralMode(Constants.IntakeConstants.motorNeutralMode);
         intakeMotor.setInverted(Constants.IntakeConstants.intakeMotorInverted);
-        intakeMotor.configOpenloopRamp(0);
+        intakeMotor.configOpenloopRamp(Constants.IntakeConstants.configOpenloopRamp);
         //config open loop???
-        m_limit.triggerThresholdCurrent = 0;
-        m_limit.triggerThresholdTime = 0;
-        m_limit.currentLimit = 0;
+        m_limit.triggerThresholdCurrent = Constants.IntakeConstants.triggerThresholdCurrent;
+        m_limit.triggerThresholdTime = Constants.IntakeConstants.triggerThresholdTime;
+        m_limit.currentLimit = Constants.IntakeConstants.currentLimit;
         m_limit.enable = true;
 
     }
@@ -52,10 +52,10 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setDefaultCurrentLimit(){
-        intakeMotor.configStatorCurrentLimit(m_limit);
+        intakeMotor.configSupplyCurrentLimit(m_limit);
     }
     public void disableCurrentLimit(){
-        intakeMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration());
+        intakeMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration());
     }
 
 
