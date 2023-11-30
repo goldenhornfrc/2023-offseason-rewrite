@@ -66,6 +66,7 @@ public final class Constants {
         public static final double triggerThresholdTime = 0;
         public static final double currentLimit = 0;
         public static final double configOpenloopRamp = 0;
+        public static final double objectDetectionCurrent = 0;
     }
 
     // drivetrain
