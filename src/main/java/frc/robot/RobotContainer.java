@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.swerve.TeleopSwerve;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.Swerve;
@@ -31,7 +33,10 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private void configureBindings() {}
+    private void configureBindings() {
+        new JoystickButton(driver, 0).onTrue(new InstantCommand(() -> {m_swerve.setWantsHeadingLock(true);}))
+        .onTrue(new InstantCommand(() -> {m_swerve.setHeadingLockTargetAngle(90);}));
+    }
 
     public Command getAutonomousCommand() {
         return null;
