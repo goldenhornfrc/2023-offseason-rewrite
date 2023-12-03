@@ -39,7 +39,7 @@ public class RobotContainer {
         //* weirdo ripple effect */
         new JoystickButton(joystick, 3)
         .toggleOnTrue(new InstantCommand(() -> m_led.setRGB(0, 0, 255))
-        .andThen(new RepeatCommand(Commands.sequence(new InstantCommand(() -> m_led.DecreaseAllLedsBrightness()),
+        .andThen(new RepeatCommand(Commands.sequence(new InstantCommand(() -> m_led.decreaseAllLedsBrightness()),
         new WaitCommand(0),
         new LighNextLed(m_led)))));
 
@@ -47,9 +47,10 @@ public class RobotContainer {
         new JoystickButton(joystick, 2)
             .toggleOnTrue(new SelectCommand(
                 Map.ofEntries(
-                Map.entry(LEDColorState.RED,Commands.repeatingSequence(m_led.AllLEDSBlinking(255, 0, 0, 0.3))),
-                Map.entry(LEDColorState.GREEN,Commands.repeatingSequence(m_led.AllLEDSBlinking(0, 255, 0, 0.3))),
-                Map.entry(LEDColorState.BLUE,Commands.repeatingSequence(m_led.AllLEDSBlinking(0, 0, 255, 0.3)))
+                Map.entry(LEDColorState.WHITE, Commands.repeatingSequence(m_led.setAllLedsBlinking(255, 255, 255, 0.3))),
+                Map.entry(LEDColorState.RED, Commands.repeatingSequence(m_led.setAllLedsBlinking(255, 0, 0, 0.3))),
+                Map.entry(LEDColorState.GREEN, Commands.repeatingSequence(m_led.setAllLedsBlinking(0, 255, 0, 0.3))),
+                Map.entry(LEDColorState.BLUE, Commands.repeatingSequence(m_led.setAllLedsBlinking(0, 0, 255, 0.3)))
                 ), () -> ledColorState()));
 
         //TODO: add command selection for different colors

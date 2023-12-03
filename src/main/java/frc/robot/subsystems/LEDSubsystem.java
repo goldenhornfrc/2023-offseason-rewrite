@@ -91,7 +91,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_rainbowFirstPixelHue %= 180;
     }*/
 
-    public void IncreaseAllLedsBrightness() {
+    public void increaseAllLedsBrightness() {
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for blue
             m_LedBuffer.setRGB(i, currentR, currentG, currentB);
@@ -108,7 +108,7 @@ public class LEDSubsystem extends SubsystemBase {
 
         m_led.setData(m_LedBuffer);
     }
-    public Command AllLEDSBlinking(int red, int green, int blue, double interval) {
+    public Command setAllLedsBlinking(int red, int green, int blue, double interval) {
         return
         Commands.runOnce(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();},this)
         .andThen(Commands.sequence(
@@ -118,7 +118,7 @@ public class LEDSubsystem extends SubsystemBase {
             new WaitCommand(interval)));
     }
 
-    public void DecreaseAllLedsBrightness() {
+    public void decreaseAllLedsBrightness() {
 
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for blue
