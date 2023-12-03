@@ -49,7 +49,7 @@ public class LEDSubsystem extends SubsystemBase {
     public LEDColorState getLEDColorState() {
         return ledColorState;
     }
- 
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
@@ -109,7 +109,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData(m_LedBuffer);
     }
     public Command AllLEDSBlinking(int red, int green, int blue, double interval) {
-        return 
+        return
         Commands.runOnce(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();},this)
         .andThen(Commands.sequence(
             new InstantCommand(() -> {setRGB(red, green, blue); setAllLedsStaticColorMode();}),

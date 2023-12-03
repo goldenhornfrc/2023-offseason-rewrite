@@ -28,4 +28,3 @@ public class ResetArm extends InstantCommand {
         m_arm.resetArm(m_AngleTarget);
     }
 }
-
