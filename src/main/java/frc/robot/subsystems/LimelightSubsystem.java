@@ -24,6 +24,12 @@ public class LimelightSubsystem extends SubsystemBase {
         }
     }
 
+    public enum LimelightState {
+        TARGET_IN_SIGHT,
+        TARGET_NOT_IN_SIGHT,
+        AIMING_AT_TARGET,
+    }
+
     public boolean isTargetValid() {
         return m_isValid;
     }

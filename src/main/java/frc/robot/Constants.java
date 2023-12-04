@@ -55,7 +55,7 @@ public final class Constants {
 
     public static class LEDConstants {
         public static final int kLEDHeader = 0;
-        public static final int kLEDBuffer = 60;
+        public static final int kLEDBuffer = 18;
     }
 
     public static class IntakeConstants {

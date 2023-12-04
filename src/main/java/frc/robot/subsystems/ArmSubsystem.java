@@ -33,6 +33,13 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor.configReverseSoftLimitThreshold(ArmConstants.kArmBottomLimit);
     }
 
+    public enum armState {
+        RESETTING,
+        CLOSED_LOOP,
+        OPEN_LOOP,
+        AT_SETPOINT
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
