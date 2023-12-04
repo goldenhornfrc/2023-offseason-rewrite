@@ -22,21 +22,21 @@ public class LighNextLed extends InstantCommand {
     @Override
     public void initialize() {
 
-        //? increases or decreases the index of the current index based on the direction
+        // ? increases or decreases the index of the current index based on the direction
         if (isReverse == false) {
             m_led.currentIndex += 1;
         } else if (isReverse == true) {
             m_led.currentIndex -= 1;
         }
 
-        //? changes the direction of animation if reaches the end of the buffer
+        // ? changes the direction of animation if reaches the end of the buffer
         if (m_led.currentIndex == m_led.getLedBuffer().getLength() - 1) {
             m_led.currentIndex = 0;
-        }else if (m_led.currentIndex == 0) {
+        } else if (m_led.currentIndex == 0) {
             isReverse = false;
         }
 
-        //? sets the led int the current index to the desired color output
+        // ? sets the led int the current index to the desired color output
         m_led.setSpecificLedStaticColorMode(m_led.currentIndex);
     }
 }

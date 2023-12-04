@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -78,19 +77,6 @@ public class LEDSubsystem extends SubsystemBase {
         currentB = b;
     }
 
-
-
-    //TODO: FIX THIS
-    /*public void setAllLedsRainbowMode(LEDSubsystem led, int r, int g, int b) {
-        int m_rainbowFirstPixelHue = 0;
-        for (var i = 0; i < led.m_LedBuffer.getLength(); i++) {
-            final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_LedBuffer.getLength()));
-            m_LedBuffer.setHSV(i, r, g, b);
-        }
-        m_rainbowFirstPixelHue += 3;
-        m_rainbowFirstPixelHue %= 180;
-    }*/
-
     public void increaseAllLedsBrightness() {
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for blue
@@ -108,14 +94,28 @@ public class LEDSubsystem extends SubsystemBase {
 
         m_led.setData(m_LedBuffer);
     }
+
     public Command setAllLedsBlinking(int red, int green, int blue, double interval) {
-        return
-        Commands.runOnce(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();},this)
-        .andThen(Commands.sequence(
-            new InstantCommand(() -> {setRGB(red, green, blue); setAllLedsStaticColorMode();}),
-            new WaitCommand(interval * 2),
-            new InstantCommand(() -> {setRGB(0, 0, 0); setAllLedsStaticColorMode();}),
-            new WaitCommand(interval)));
+        return Commands.runOnce(
+                        () -> {
+                            setRGB(0, 0, 0);
+                            setAllLedsStaticColorMode();
+                        },
+                        this)
+                .andThen(
+                        Commands.sequence(
+                                new InstantCommand(
+                                        () -> {
+                                            setRGB(red, green, blue);
+                                            setAllLedsStaticColorMode();
+                                        }),
+                                new WaitCommand(interval * 2),
+                                new InstantCommand(
+                                        () -> {
+                                            setRGB(0, 0, 0);
+                                            setAllLedsStaticColorMode();
+                                        }),
+                                new WaitCommand(interval)));
     }
 
     public void decreaseAllLedsBrightness() {
@@ -138,7 +138,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData(m_LedBuffer);
     }
 
-    public void SetLEDData(AddressableLED led,AddressableLEDBuffer buffer) {
+    public void SetLEDData(AddressableLED led, AddressableLEDBuffer buffer) {
         led.setData(buffer);
     }
 }

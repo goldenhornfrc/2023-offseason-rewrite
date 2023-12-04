@@ -9,6 +9,7 @@ import frc.robot.subsystems.LEDSubsystem;
 
 public class AllLedsStaticColor extends CommandBase {
     private LEDSubsystem m_led;
+
     /** Creates a new AllLedsStaticColor. */
     public AllLedsStaticColor(LEDSubsystem ledSubsystem) {
         m_led = ledSubsystem;

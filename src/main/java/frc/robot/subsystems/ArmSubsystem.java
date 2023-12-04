@@ -33,7 +33,7 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor.configReverseSoftLimitThreshold(ArmConstants.kArmBottomLimit);
     }
 
-    public enum armState{
+    public enum armState {
         RESETTING,
         CLOSED_LOOP,
         OPEN_LOOP,
