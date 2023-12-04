@@ -13,6 +13,7 @@ import frc.robot.Constants;
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.IntakeConstants.intakeMotorID);
     private SupplyCurrentLimitConfiguration m_limit = new SupplyCurrentLimitConfiguration();
+    private boolean intakeHasObject = false;
 
     /** Creates a new IntakeSubsystem. */
     public enum IntakeState {
@@ -52,6 +53,14 @@ public class IntakeSubsystem extends SubsystemBase {
         return intakeState;
     }
 
+    public boolean getIntakeHasObject() {
+        return intakeHasObject;
+    }
+
+    public void setIntakeHasObject(boolean value) {
+        intakeHasObject = value;
+    }
+
     public double getMotorCurrent() {
 
         return intakeMotor.getSupplyCurrent();
@@ -67,6 +76,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         // This method will be called once per scheduler run
     }
 }

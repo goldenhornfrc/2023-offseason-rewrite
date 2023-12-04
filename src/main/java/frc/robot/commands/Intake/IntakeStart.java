@@ -34,6 +34,7 @@ public class IntakeStart extends CommandBase {
         if (m_intake.getMotorCurrent() >= IntakeConstants.objectDetectionCurrent
                 && m_intake.getIntakeState() == IntakeState.RUN) {
             m_intake.setIntakeState(IntakeState.HOLD);
+            m_intake.setIntakeHasObject(true);
         }
     }
 
