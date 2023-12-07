@@ -90,10 +90,10 @@ public class RobotContainer {
                                                 Commands.repeatingSequence(m_led.setAllLedsBlinking(0, 0, 255, 0.3)))),
                                 () -> ledColorState()));
 
-        // TODO: add command selection for different colors
-
         Trigger intakeFull = new Trigger(m_intake::getIntakeHasObject);
 
+        // * flush orange color RGB value = 0,255,127 */
+        // ? while angle lock is active, leds will blink in flush orange color with 0.1s blinks
         new JoystickButton(driver, 3)
                 .onTrue(
                         new InstantCommand(
@@ -104,7 +104,10 @@ public class RobotContainer {
                         new InstantCommand(
                                 () -> {
                                     m_swerve.setHeadingLockTargetAngle(90);
-                                }));
+                                }))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 255, 127, 0.1)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()));
 
         new JoystickButton(driver, 2)
                 .onTrue(
@@ -116,7 +119,10 @@ public class RobotContainer {
                         new InstantCommand(
                                 () -> {
                                     m_swerve.setHeadingLockTargetAngle(180);
-                                }));
+                                }))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 255, 127, 0.1)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()));
 
         new JoystickButton(driver, 1)
                 .onTrue(
@@ -128,7 +134,10 @@ public class RobotContainer {
                         new InstantCommand(
                                 () -> {
                                     m_swerve.setHeadingLockTargetAngle(270);
-                                }));
+                                }))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 255, 127, 0.1)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()));
 
         new JoystickButton(driver, 4)
                 .onTrue(
@@ -140,65 +149,108 @@ public class RobotContainer {
                         new InstantCommand(
                                 () -> {
                                     m_swerve.setHeadingLockTargetAngle(0);
-                                }));
+                                }))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 255, 127, 0.1)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()));
 
-        // ? due to limited amount of buttons to bind, some arm angle commands should be done by
+        // ! due to limited amount of buttons to bind, some arm angle commands should be done by
         // operator
+        // ? led will be static color when lifting object to specific height to reduce distraction
         // * arm angle for cone actions */
         new JoystickButton(driver, 7)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeLow)))
+                .onTrue(new InstantCommand(() -> m_led.setRGB(255, 255, 0)))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         new JoystickButton(driver, 5)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeMid)))
+                .onTrue(new InstantCommand(() -> m_led.setRGB(255, 255, 0)))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         // ! because of lack of buttons, intake control and human player is binded to operator
-        // controller
+        // ? blinking led animation is used when picking up cone from ground and from human player
         new JoystickButton(operator, 4)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeIntake)))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(255, 255, 0, 0.2)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         new JoystickButton(operator, 9)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeHuman)))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(255, 255, 0, 0.2)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
-        // ? there are 3 height settings for cube because of the new catapult feature which enables us
-        // to score high cube
+        // !there is high setting because of the new catapult feature which enables us to score high
+        // cube
+        // ? led will be static color when lifting object to specific height to reduce distraction
         // * arm angle for cube actions */
         new JoystickButton(driver, 8)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeLow)))
+                .onTrue(new InstantCommand(() -> m_led.setRGB(0, 0, 255)))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         new JoystickButton(driver, 6)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeMid)))
+                .onTrue(new InstantCommand(() -> m_led.setRGB(0, 0, 255)))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         new JoystickButton(operator, 3) // ! i ran out of buttons to bind in driver controller
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeHigh)))
+                .onTrue(new InstantCommand(() -> m_led.setRGB(0, 0, 255)))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         // ! because of lack of buttons, intake control and human player is binded to operator
-        // controller
         new JoystickButton(operator, 1)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeIntake)))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 0, 255, 0.3)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         new JoystickButton(operator, 10)
                 .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeHuman)))
+                .whileTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(0, 0, 255, 0.3)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new InstantCommand(() -> m_arm.stopArm()));
 
         // * arm home command to set arm angle to 0 degrees */
         new JoystickButton(operator, 8).onTrue(new InstantCommand(() -> m_arm.resetArm(0)));
 
-        // * intake controls are done by the operator, also having to do this would be too much for the
-        // driver */
+        // ! intake is most vulnurable when enabled
+        // ? leds will be rose color to indicate that intake is active
+        // * intake controls are done by operator, having to do this would be too much for driver
         new JoystickButton(operator, 5)
                 .toggleOnTrue(new IntakeStart(m_intake, 0.5))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(255, 0, 127, 0.2)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new IntakeStop(m_intake));
 
         new JoystickButton(operator, 6)
                 .toggleOnTrue(new IntakeStart(m_intake, -0.5))
+                .onTrue(new InstantCommand(() -> m_led.setAllLedsBlinking(255, 0, 127, 0.2)))
+                .onFalse(new InstantCommand(() -> m_led.setRGB(0, 0, 0)))
+                .onFalse(new InstantCommand(() -> m_led.setAllLedsStaticColorMode()))
                 .onFalse(new IntakeStop(m_intake));
     }
 
