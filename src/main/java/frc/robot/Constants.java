@@ -46,6 +46,17 @@ public final class Constants {
         public static final double kArmTolerance = 1;
 
         public static final double kArmResetSensorAngle = 0.0;
+
+        //TODO: put in correct numbers here
+        public static final double kArmConeIntake = 0;
+        public static final double kArmCubeIntake = 0;
+        public static final double kArmCubeLow = 0;
+        public static final double kArmConeLow = 0;
+        public static final double kArmConeMid = 0;
+        public static final double kArmCubeMid = 0;
+        public static final double kArmCubeHigh = 0;
+        public static final double kArmCubeHuman = 0;
+        public static final double kArmConeHuman = 0;
     }
 
     public static class LimelightConstants {

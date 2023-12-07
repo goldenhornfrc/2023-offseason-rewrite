@@ -14,8 +14,13 @@ import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.Arm.SetArmOpenLoop;
+import frc.robot.commands.Intake.IntakeStart;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.LED.LighNextLed;
 import frc.robot.commands.swerve.TeleopSwerve;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LEDSubsystem.LEDColorState;
@@ -23,13 +28,18 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.Swerve;
 import java.util.Map;
 
+import org.ejml.dense.block.MatrixOps_DDRB;
+
 public class RobotContainer {
     public final LEDSubsystem m_led = new LEDSubsystem();
     public final Swerve m_swerve = new Swerve();
+    public final ArmSubsystem m_arm = new ArmSubsystem();
     public final LimelightSubsystem m_lime = new LimelightSubsystem();
-    private final Joystick driver = new Joystick(0);
     public final IntakeSubsystem m_intake = new IntakeSubsystem();
-    private final Joystick joystick = new Joystick(1);
+
+    private final Joystick driver = new Joystick(0);
+    private final Joystick operator = new Joystick(1);
+    private final Joystick thirdController = new Joystick(2);
 
     private LEDColorState ledColorState() {
         return LEDColorState.WHITE;
@@ -54,7 +64,7 @@ public class RobotContainer {
     private void configureBindings() {
 
         // * weirdo ripple effect */
-        new JoystickButton(joystick, 3)
+        new JoystickButton(thirdController, 1)
                 .toggleOnTrue(
                         new InstantCommand(() -> m_led.setRGB(0, 0, 255))
                                 .andThen(
@@ -65,7 +75,7 @@ public class RobotContainer {
                                                         new LighNextLed(m_led)))));
 
         // * blinking effect */
-        new JoystickButton(joystick, 2)
+        new JoystickButton(thirdController, 3)
                 .toggleOnTrue(
                         new SelectCommand(
                                 Map.ofEntries(
@@ -134,7 +144,66 @@ public class RobotContainer {
                                 () -> {
                                     m_swerve.setHeadingLockTargetAngle(0);
                                 }));
-    }
+
+        //? due to limited amount of buttons to bind, some arm angle commands should be done by operator
+        //* arm angle for cone actions */
+        new JoystickButton(driver, 7)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeLow)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+        new JoystickButton(driver, 5)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeMid)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+
+        //! because of lack of buttons, intake control and human player is binded to operator controller
+        new JoystickButton(operator, 4)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeIntake)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+        new JoystickButton(operator, 9)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmConeHuman)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+   
+        //? there are 3 height settings for cube because of the new catapult feature which enables us to score high cube
+        //* arm angle for cube actions */
+        new JoystickButton(driver, 8)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeLow)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+        new JoystickButton(driver, 6)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeMid)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+        new JoystickButton(operator, 3) //! i ran out of buttons to bind in driver controller
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeHigh)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+
+        //! because of lack of buttons, intake control and human player is binded to operator controller
+        new JoystickButton(operator, 1)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeIntake)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+        new JoystickButton(operator, 10)
+                .toggleOnTrue(new InstantCommand(() -> m_arm.setArmAngle(ArmConstants.kArmCubeHuman)))
+                .onFalse(new InstantCommand(() -> m_arm.stopArm()));
+
+
+        //* arm home command to set arm angle to 0 degrees */
+        new JoystickButton(operator, 8)
+                .onTrue(new InstantCommand(() -> m_arm.resetArm(0)));
+
+        //* intake controls are done by the operator, also having to do this would be too much for the driver */
+        new JoystickButton(operator, 5)
+                .toggleOnTrue(new IntakeStart(m_intake, 0.5))
+                .onFalse(new IntakeStop(m_intake));
+
+        new JoystickButton(operator, 6)
+                .toggleOnTrue(new IntakeStart(m_intake, -0.5))
+                .onFalse(new IntakeStop(m_intake));
+
+        }
 
     public Command getAutonomousCommand() {
         return null;
