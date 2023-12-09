@@ -13,13 +13,13 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.SwerveModuleConstants;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+  * constants. This class should not be used for any other purpose. All constants should be declared
+  * globally (i.e. public static). Do not put anything functional in this class.
+  *
+  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+  * constants are needed, to reduce verbosity.
+  */
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
@@ -48,15 +48,12 @@ public final class Constants {
         public static final double kArmResetSensorAngle = 0.0;
 
         // TODO: put in correct numbers here
-        public static final double kArmConeIntake = 0;
-        public static final double kArmCubeIntake = 0;
-        public static final double kArmCubeLow = 0;
-        public static final double kArmConeLow = 0;
+        public static final double kArmConeGround = 0;
+        public static final double kArmCubeGround = 0;
+        public static final double kArmHome = 0;
         public static final double kArmConeMid = 0;
         public static final double kArmCubeMid = 0;
-        public static final double kArmCubeHigh = 0;
-        public static final double kArmCubeHuman = 0;
-        public static final double kArmConeHuman = 0;
+        public static final double kArmHuman = 0;
     }
 
     public static class LimelightConstants {
@@ -70,14 +67,14 @@ public final class Constants {
     }
 
     public static class IntakeConstants {
-        public static final int intakeMotorID = 0;
+        public static final int intakeMotorID = 25;
         public static final NeutralMode motorNeutralMode = NeutralMode.Brake;
         public static final boolean intakeMotorInverted = false;
         public static final double triggerThresholdCurrent = 0;
         public static final double triggerThresholdTime = 0;
         public static final double currentLimit = 0;
         public static final double configOpenloopRamp = 0;
-        public static final double objectDetectionCurrent = 0;
+        public static final double objectDetectionCurrent = 5;
     }
 
     // drivetrain

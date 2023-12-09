@@ -6,14 +6,14 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public class OnboardModuleState {
 
     /**
-     * Minimize the change in heading the desired swerve module state would require by potentially
-     * reversing the direction the wheel spins. Customized from WPILib's version to include placing in
-     * appropriate scope for CTRE and REV onboard control as both controllers as of writing don't have
-     * support for continuous input.
-     *
-     * @param desiredState The desired state.
-     * @param currentAngle The current module angle.
-     */
+      * Minimize the change in heading the desired swerve module state would require by potentially
+      * reversing the direction the wheel spins. Customized from WPILib's version to include placing in
+      * appropriate scope for CTRE and REV onboard control as both controllers as of writing don't have
+      * support for continuous input.
+      *
+      * @param desiredState The desired state.
+      * @param currentAngle The current module angle.
+      */
     public static SwerveModuleState optimize(
             SwerveModuleState desiredState, Rotation2d currentAngle) {
         double targetAngle =
@@ -28,10 +28,10 @@ public class OnboardModuleState {
     }
 
     /**
-     * @param scopeReference Current Angle
-     * @param newAngle Target Angle
-     * @return Closest angle within scope
-     */
+      * @param scopeReference Current Angle
+      * @param newAngle Target Angle
+      * @return Closest angle within scope
+      */
     private static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
         double lowerBound;
         double upperBound;

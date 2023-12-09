@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -62,7 +63,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public double getMotorCurrent() {
-
         return intakeMotor.getSupplyCurrent();
     }
 
@@ -78,5 +78,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
 
         // This method will be called once per scheduler run
+
+        SmartDashboard.putBoolean("intakehasobject", getIntakeHasObject());
     }
 }

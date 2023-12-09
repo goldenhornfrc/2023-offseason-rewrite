@@ -109,7 +109,7 @@ public class LEDSubsystem extends SubsystemBase {
                                             setRGB(red, green, blue);
                                             setAllLedsStaticColorMode();
                                         }),
-                                new WaitCommand(interval * 2),
+                                new WaitCommand(interval * 1.5),
                                 new InstantCommand(
                                         () -> {
                                             setRGB(0, 0, 0);
