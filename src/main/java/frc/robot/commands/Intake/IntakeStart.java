@@ -23,7 +23,8 @@ public class IntakeStart extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (m_intake.getIntakeState() != IntakeState.HOLD) {
+        if (m_intake.getIntakeState() != IntakeState.HOLD
+                && m_intake.getIntakeState() != IntakeState.RELEASE) {
             m_intake.setIntakeState(IntakeState.RUN);
         }
     }
@@ -36,13 +37,15 @@ public class IntakeStart extends CommandBase {
             m_intake.setIntakeState(IntakeState.HOLD);
             m_intake.setIntakeHasObject(true);
         }
+
+        m_intake.setMotor(m_speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         if (m_intake.getIntakeState() == IntakeState.HOLD) {
-            m_intake.setMotor((m_speed / Math.abs(m_speed)) * 0.3);
+            m_intake.setMotor((m_speed / Math.abs(m_speed)) * 0.1);
         } else {
             m_intake.setMotor(0);
             m_intake.setIntakeState(IntakeState.STANDBY);

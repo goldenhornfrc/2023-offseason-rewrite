@@ -113,8 +113,8 @@ spotless {
         lineEndings 'WINDOWS'
 
         googleJavaFormat()
-        indentWithTabs(2)
-        indentWithSpaces(4)
+        indentWithTabs(1)
+        indentWithSpaces(2)
         removeUnusedImports()
     }
 }

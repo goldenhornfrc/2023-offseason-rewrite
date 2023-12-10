@@ -9,9 +9,9 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class SetArmClosedLoop extends CommandBase {
-    private static ArmSubsystem m_arm;
-    private static double m_targetAngle;
-    private static boolean m_isContinous;
+    private ArmSubsystem m_arm;
+    private double m_targetAngle;
+    private boolean m_isContinous;
 
     /** Creates a new SetArmClosedLoop. */
     public SetArmClosedLoop(ArmSubsystem arm, double target, boolean iscontinious) {
@@ -24,7 +24,9 @@ public class SetArmClosedLoop extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        System.out.println(m_targetAngle);
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override

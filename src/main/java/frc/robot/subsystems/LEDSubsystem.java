@@ -58,6 +58,14 @@ public class LEDSubsystem extends SubsystemBase {
         return m_LedBuffer;
     }
 
+    public void setAllLedsStaticColorMode(int r, int g, int b) {
+        for (var i = 0; i < m_LedBuffer.getLength(); i++) {
+            m_LedBuffer.setRGB(i, r, g, b);
+        }
+
+        m_led.setData(m_LedBuffer);
+    }
+
     public void setAllLedsStaticColorMode() {
         for (var i = 0; i < m_LedBuffer.getLength(); i++) {
             m_LedBuffer.setRGB(i, currentR, currentG, currentB);
@@ -109,7 +117,7 @@ public class LEDSubsystem extends SubsystemBase {
                                             setRGB(red, green, blue);
                                             setAllLedsStaticColorMode();
                                         }),
-                                new WaitCommand(interval * 2),
+                                new WaitCommand(interval * 1.5),
                                 new InstantCommand(
                                         () -> {
                                             setRGB(0, 0, 0);

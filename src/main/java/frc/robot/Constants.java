@@ -13,39 +13,48 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.SwerveModuleConstants;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+  * constants. This class should not be used for any other purpose. All constants should be declared
+  * globally (i.e. public static). Do not put anything functional in this class.
+  *
+  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+  * constants are needed, to reduce verbosity.
+  */
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
     public static class ArmConstants {
         public static final int kMotorID = 30;
         public static final boolean kMotorInverted = false;
-        public static final NeutralMode kMotorNeutralMode = NeutralMode.Brake;
-        public static final double kArmClosedLoopRamp = 1;
+        public static final NeutralMode kMotorNeutralMode =
+                NeutralMode.Coast; // TODO: put back to brake
+        public static final double kArmClosedLoopRamp = 0.1;
 
-        public static final double kArmConversionFactor = ((48.0 * 2.8) / 2048.0) * 360.0;
+        public static final double kArmConversionFactor = 1.0 / (360.0 / ((48.0 * 2.8) * 2048.0));
 
-        public static final double kArmTopLimit = 0.0;
-        public static final double kArmBottomLimit = 0.0;
+        public static final double kArmTopLimit = 217.0;
+        public static final double kArmBottomLimit = -36.25;
         public static final double kArmVoltageCompansationValue = 12.0;
 
-        public static final double kArmCruiseVelocity = 0.0;
-        public static final double kArmAcceleration = 0.0;
+        public static final double kArmCruiseVelocity = 35000.0;
+        public static final double kArmAcceleration = 35000.0;
 
-        public static final double kArmP = 0.0;
+        public static final double kArmP = 0.1;
         public static final double kArmI = 0.0;
         public static final double kArmD = 0.0;
-        public static final double kArmFeedForwardValue = 0.0;
+        public static final double kArmFeedForwardValue = 0.04;
 
         public static final double kArmTolerance = 1;
 
         public static final double kArmResetSensorAngle = 0.0;
+
+        // TODO: put in correct numbers here
+        public static final double kArmConeGround = 190;
+        public static final double kArmCubeGround = 100;
+        public static final double kArmHome = -41.15;
+        public static final double kArmConeMid = 0;
+        public static final double kArmCubeMid = 0;
+        public static final double kArmHuman = 0;
     }
 
     public static class LimelightConstants {
@@ -54,19 +63,18 @@ public final class Constants {
     }
 
     public static class LEDConstants {
-        public static final int kLEDHeader = 0;
+        public static final int kLEDHeader = 9;
         public static final int kLEDBuffer = 18;
     }
 
     public static class IntakeConstants {
-        public static final int intakeMotorID = 0;
-        public static final NeutralMode motorNeutralMode = NeutralMode.Brake;
+        public static final int intakeMotorID = 40; // 40
+        public static final NeutralMode motorNeutralMode = NeutralMode.Coast;
         public static final boolean intakeMotorInverted = false;
-        public static final double triggerThresholdCurrent = 0;
-        public static final double triggerThresholdTime = 0;
-        public static final double currentLimit = 0;
-        public static final double configOpenloopRamp = 0;
-        public static final double objectDetectionCurrent = 0;
+        public static final double triggerThresholdCurrent = 40;
+        public static final double triggerThresholdTime = 1;
+        public static final double currentLimit = 40;
+        public static final double objectDetectionCurrent = 30;
     }
 
     // drivetrain
