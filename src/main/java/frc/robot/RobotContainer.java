@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.Arm.SetArmClosedLoop;
+import frc.robot.commands.Arm.SetArmOpenLoop;
 import frc.robot.commands.Intake.IntakeStart;
 import frc.robot.commands.LED.LighNextLed;
 import frc.robot.commands.swerve.TeleopSwerve;
@@ -26,6 +28,7 @@ import frc.robot.subsystems.LEDSubsystem.LEDColorState;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.Swerve;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 public class RobotContainer {
     public final LEDSubsystem m_led = new LEDSubsystem();
@@ -36,13 +39,15 @@ public class RobotContainer {
 
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+    private final Joystick thirdJoystick = new Joystick(2);
+    private BooleanSupplier intakeFullSupplier = () -> m_intake.getIntakeHasObject();
+    public Trigger intakeFullTrigger = new Trigger(intakeFullSupplier);
 
     private LEDColorState ledColorState() {
         return LEDColorState.WHITE;
     }
 
     public RobotContainer() {
-        configureBindings();
         DriverStation.silenceJoystickConnectionWarning(true);
 
         m_swerve.setFieldOriented();
@@ -59,7 +64,23 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        Trigger intakeFullTrigger = new Trigger(m_intake::getIntakeHasObject);
+        intakeFullTrigger.whileTrue(
+                new RepeatCommand(
+                        Commands.sequence(
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(255, 0, 0)),
+                                new WaitCommand(0.2),
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(0, 0, 0)),
+                                new WaitCommand(0.2))));
+        new JoystickButton(thirdJoystick, 1).whileTrue(new SetArmClosedLoop(m_arm, 190, true));
+
+        new JoystickButton(thirdJoystick, 4).whileTrue(new SetArmClosedLoop(m_arm, -35, true));
+
+        new JoystickButton(thirdJoystick, 6).whileTrue(new SetArmClosedLoop(m_arm, 90, true));
+
+        new JoystickButton(thirdJoystick, 5).whileTrue(new SetArmClosedLoop(m_arm, 140, true));
+
+        new JoystickButton(thirdJoystick, 2).whileTrue(new SetArmOpenLoop(m_arm, 0.04));
+        new JoystickButton(thirdJoystick, 3).whileTrue(new SetArmOpenLoop(m_arm, -0.04));
 
         // * weirdo ripple effect */
         new JoystickButton(driver, 1)
@@ -141,8 +162,7 @@ public class RobotContainer {
                                     m_swerve.setHeadingLockTargetAngle(0);
                                 }));
 
-        intakeFullTrigger.whileTrue(
-                Commands.repeatingSequence(m_led.setAllLedsBlinking(153, 0, 153, 0.1)));
+        // Commands.repeatingSequence(m_led.setAllLedsBlinking(255, 0, 0, 0.1)));
 
         // ! due to limited amount of buttons to bind, some arm angle commands should be done by
 
@@ -151,79 +171,60 @@ public class RobotContainer {
         // ? led will be static color when lifting object to specific height to reduce distraction
         // * arm angle for cone actions */
 
-        new JoystickButton(operator, 5)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmConeMid, true));
+        new JoystickButton(operator, 3)
+                .onTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmConeCubeMid, true));
 
         // ! because of lack of buttons, intake control and human player is binded to operator
         // ? blinking led animation is used when picking up cone from ground and from human player
-        new JoystickButton(operator, 4)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmHome, true));
-
         new JoystickButton(operator, 1)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmConeGround, true));
+                .onTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmHome, true));
 
-        new JoystickButton(operator, 4)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmCubeGround, true));
+        new POVButton(operator, 180)
+                .onTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmConeGround, true));
 
-        // !there is high setting because of the new catapult feature which enables us to score high
-        // cube
-        // ? led will be static color when lifting object to specific height to reduce distraction
-        // * arm angle for cube actions */
+        new POVButton(operator, 90)
+                .onTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmCubeGround, true));
 
-        new JoystickButton(operator, 6)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmConeMid, true));
-        // ! because of lack of buttons, intake control and human player is binded to operator
-
-        new JoystickButton(operator, 10)
-                .toggleOnTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmHuman, true));
+        new POVButton(operator, 270).onTrue(new SetArmClosedLoop(m_arm, ArmConstants.kArmHuman, true));
 
         // * arm home command to set arm angle to 0 degrees */
-        new JoystickButton(operator, 8).onTrue(new InstantCommand(() -> m_arm.resetArm(0)));
+        new JoystickButton(operator, 10).onTrue(new InstantCommand(() -> m_arm.resetArm(0)));
+
+        new JoystickButton(operator, 2)
+                .whileTrue(
+                        new SetArmOpenLoop(m_arm, 0.7).withTimeout(1).raceWith(new IntakeStart(m_intake, 0.5)));
 
         // OUTTAKKKEE
         // CONE outtake
-        new JoystickButton(operator, 1)
+        new JoystickButton(operator, 5)
                 .whileTrue(
                         Commands.parallel(
-                                new InstantCommand(
-                                        () -> {
-                                            m_led.setRGB(75, 55, 0);
-                                            m_led.setAllLedsStaticColorMode();
-                                        }),
-                                new IntakeStart(m_intake, 0.5)));
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(0, 0, 0)),
+                                new IntakeStart(m_intake, -0.5))); // TRIGGER EKLENECEK
 
         // CUBE outtake
-        new JoystickButton(operator, 1)
+        new JoystickButton(operator, 5)
                 .whileTrue(
                         Commands.parallel(
-                                new InstantCommand(
-                                        () -> {
-                                            m_led.setRGB(60, 0, 60);
-                                            m_led.setAllLedsStaticColorMode();
-                                        }),
-                                new IntakeStart(m_intake, -0.5)));
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(0, 0, 0)),
+                                new IntakeStart(m_intake, 0.5))); // TRIGGER EKLENECeKKKK
 
         // ! intake is most vulnurable when enabled
         // ? leds will be rose color to indicate that intake is active
         // * intake controls are done by operator, having to do this would be too much for driver
+
+        // CUBEEEEE INTAKE
         new JoystickButton(operator, 5)
                 .whileTrue(
                         Commands.parallel(
-                                new InstantCommand(
-                                        () -> {
-                                            m_led.setRGB(60, 0, 90);
-                                            m_led.setAllLedsStaticColorMode();
-                                        }),
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(0, 0, 0)),
                                 new IntakeStart(m_intake, 0.5)));
 
-        new JoystickButton(operator, 1)
+        // CONEEEEEE INTAKE
+        new JoystickButton(operator, 6)
                 .whileTrue(
                         Commands.parallel(
-                                new InstantCommand(
-                                        () -> {
-                                            m_led.setRGB(75, 55, 0);
-                                            m_led.setAllLedsStaticColorMode();
-                                        }),
+                                new InstantCommand(() -> m_led.setAllLedsStaticColorMode(0, 0, 0)),
                                 new IntakeStart(m_intake, -0.5)));
     }
 

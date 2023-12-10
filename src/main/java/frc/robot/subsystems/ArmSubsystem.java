@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
@@ -29,8 +30,12 @@ public class ArmSubsystem extends SubsystemBase {
 
         armMotor.configForwardSoftLimitEnable(true);
         armMotor.configReverseSoftLimitEnable(true);
-        armMotor.configForwardSoftLimitThreshold(ArmConstants.kArmTopLimit);
-        armMotor.configReverseSoftLimitThreshold(ArmConstants.kArmBottomLimit);
+        armMotor.configForwardSoftLimitThreshold(
+                ArmConstants.kArmTopLimit * ArmConstants.kArmConversionFactor);
+        armMotor.configReverseSoftLimitThreshold(
+                ArmConstants.kArmBottomLimit * ArmConstants.kArmConversionFactor);
+
+        resetArm(ArmConstants.kArmHome);
     }
 
     public enum armState {
@@ -42,6 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("arm angle", getArmAngle());
         // This method will be called once per scheduler run
     }
 
@@ -70,19 +76,20 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor.configMotionCruiseVelocity(ArmConstants.kArmCruiseVelocity);
         armMotor.configMotionAcceleration(ArmConstants.kArmAcceleration);
 
+        SmartDashboard.putNumber("armtarget", targetAngle);
         armMotor.set(
                 ControlMode.MotionMagic,
-                (targetAngle / ArmConstants.kArmConversionFactor),
+                (targetAngle * ArmConstants.kArmConversionFactor),
                 DemandType.ArbitraryFeedForward,
                 Math.cos(Math.toRadians(getArmAngle())) * ArmConstants.kArmFeedForwardValue);
     }
 
     public double getArmAngle() {
-        return armMotor.getSelectedSensorPosition() * ArmConstants.kArmConversionFactor;
+        return armMotor.getSelectedSensorPosition() / ArmConstants.kArmConversionFactor;
     }
 
     public void resetArm(double value) {
-        armMotor.setSelectedSensorPosition(value / ArmConstants.kArmConversionFactor);
+        armMotor.setSelectedSensorPosition(value * ArmConstants.kArmConversionFactor);
     }
 
     public double getCurrentSensorPosition() {

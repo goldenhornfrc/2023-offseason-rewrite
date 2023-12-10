@@ -14,6 +14,7 @@ public class SetArmOpenLoop extends CommandBase {
     /** Creates a new SetArmVoltage. */
     public SetArmOpenLoop(ArmSubsystem arm, double speed) {
         m_arm = arm;
+        m_speed = speed;
         addRequirements();
     }
 
